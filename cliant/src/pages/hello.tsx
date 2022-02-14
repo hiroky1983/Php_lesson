@@ -1,22 +1,22 @@
-import type { NextPage } from 'next'
-import useSWR from 'swr'
-import axios from '../lib/axios'
- 
+import type { NextPage } from "next";
+import useSWR from "swr";
+import axios from "../lib/axios";
+
 const Hello: NextPage = () => {
-  const { data, error } = useSWR('/api/hello', () =>
-    axios.get('/api/hello')
-    .then((res: any) => res.data)
-  )
-    
-  if (error) return <div>エラーが発生しました</div>
-  if (!data) return <div>読み込み中</div>
+  const { data, error } = useSWR("/api/hello", () =>
+    axios.get("/api/hello").then((res: any) => res.data)
+  );
+  console.log(data);
+
+  if (error) return <div>エラーが発生しました</div>;
+  if (!data) return <div>読み込み中</div>;
   return (
-  <div>
+    <div>
       <h1>ようこそ, next.js</h1>
       <hr />
       <p>{data}-1234</p>
-  </div>
-  )
-}
- 
-export default Hello
+    </div>
+  );
+};
+
+export default Hello;
