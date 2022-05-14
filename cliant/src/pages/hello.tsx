@@ -1,10 +1,13 @@
+import { AxiosResponse } from "axios";
 import type { NextPage } from "next";
 import useSWR from "swr";
 import axios from "../lib/axios";
 
 const Hello: NextPage = () => {
   const { data, error } = useSWR("/api/hello", () =>
-    axios.get("/api/hello").then((res: any) => res.data)
+    axios
+      .get("/api/hello")
+      .then((res: AxiosResponse) => res.data)
   );
   console.log(data);
 
