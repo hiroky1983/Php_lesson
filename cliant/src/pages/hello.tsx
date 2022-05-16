@@ -17,7 +17,7 @@ const Hello: NextPage = () => {
   if (!data) return <div>読み込み中</div>;
   return (
     <div className="m-auto w-4/5">
-      <h1 className="shadow-xl">ようこそ, next.js</h1>
+      <h1>ようこそ, next.js</h1>
       <hr />
       <ul className="mt-4 grid grid-cols-2 gap-7">
         {data.map((d, i) => (
