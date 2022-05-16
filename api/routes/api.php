@@ -15,5 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/hello', function () {
-    return 'Hello Next.js, from Laravel API Now';
+    return [
+        ['name' => 'John' ],
+        ['name' => 'Jane' ],
+        ['name' => 'Bob' ],
+        ['name' => 'Hello Next.js, from Laravel API Now']
+    ];
 });
