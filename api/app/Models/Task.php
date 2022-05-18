@@ -11,7 +11,6 @@ class Task extends Model
 
     protected $fileable = [
         'title',
-        'is_done',
-    
+        'is_done', 
     ];
 }
