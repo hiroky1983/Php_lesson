@@ -64,11 +64,21 @@ class TaskTest extends TestCase
     */
     public function nullableText()
     {
-       $data = [
-           'title' => ''
-       ];
-       $response = $this->postJson('api/tasks', $data);
-       dd($response->json());
-       $response->assertCreated()->assertJsonFragment($data);
+        $data = [
+            'title' => ''
+        ];
+        $response = $this->postJson('api/tasks', $data);
+        $response->assertStatus(422)->assertJsonValidationErrors(['title' => 'タイトルは、必ず指定してください。']);
+    }
+        /**
+    * @test
+    */
+    public function textMaxLenghtTest()
+    {
+        $data = [
+            'title' => str_repeat('a', 256)
+        ];
+        $response = $this->postJson('api/tasks', $data);
+        $response->assertStatus(422)->assertJsonValidationErrors(['title' => 'タイトルは、255文字以下にしてください。']);
     }
 }
