@@ -28,7 +28,9 @@ class TaskController extends Controller
     {
         $task = Task::create($request->all());
 
-        return $task ? response()->json($task, 201) : response()->json([], 500);
+        return $task ? 
+        response()->json($task, 201) 
+        : response()->json([], 500);
     }
 
     /**
@@ -45,7 +47,7 @@ class TaskController extends Controller
      *
      * @param  \App\Http\Requests\UpdateTaskRequest  $request
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\JosnResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {

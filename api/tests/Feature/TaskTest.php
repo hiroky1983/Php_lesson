@@ -30,39 +30,44 @@ class TaskTest extends TestCase
         $data = [
             'title' => 'test投稿'
         ];
-
         $response = $this->postJson('api/tasks', $data);
-        dd($response->json());
-        // $response->assertCreated()->assertJsonFragment($data);
+        $response->assertCreated()->assertJsonFragment($data);
     }
-
+    
     /**
      * @test
      */
-    // public function testUpdateText()
-    // {
-    //     $task = Task::factory()->create();
-
-    //     $task->tilte = '書き換え';
-    //     $response = $this->patchJson("api/tasks/{$task->id}", $task->toArray()); 
-    //     $response->assertOk()->assertJsonFragment($task->toArray());
-    // }
+    public function testUpdateText()
+    {
+        $task = Task::factory()->create();
+        
+        $task->title = '書き換え';
+        $response = $this->patchJson("api/tasks/{$task->id}", $task->toArray()); 
+        $response->assertOk()->assertJsonFragment($task->toArray());
+    }
     // /**
     //  * @test
     //  */
-    // public function testDaleteText()
-    // {
-    //     $task = Task::factory()->count(10)->create();
+    public function testDeleteText()
+    {
+        $task = Task::factory()->count(10)->create();
 
-    //     $response = $this->deleteJson("api/tasks/1"); 
-    //     $response->assertJsonCount($task->count() - 1);
-    // }
-    // public function nullableText()
-    // {
-    //    $data = [
-    //        'title' => ''
-    //    ];
-    //    $response = $this->postJson('api/tasks', $data);
-    //    $response->assertCreated()->assertJsonFragment($data);
-    // }
+        $response = $this->deleteJson("api/tasks/1"); 
+        $response->assertOk();
+
+        $response = $this->getJson("api/tasks");
+        $response->assertJsonCount($task->count() - 1);
+    }
+    
+    //**
+    //  * @test
+    //  */
+    public function nullableText()
+    {
+       $data = [
+           'title' => ''
+       ];
+       $response = $this->postJson('api/tasks', $data);
+       $response->assertCreated()->assertJsonFragment($data);
+    }
 }
