@@ -9,8 +9,6 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $fileable = [
-        'title',
-        'is_done', 
-    ];
+    protected $fileable = ['title', 'is_done'];
+    protected $casts = ['is_done' => 'bool',];
 }
