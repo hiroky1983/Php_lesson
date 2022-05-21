@@ -17,35 +17,50 @@ const Tasks: NextPage = () => {
     axios.get("/api/tasks").then((res) => res.data)
   );
   const [title, setTilte] = useState("");
+  const [err, setErr] = useState("");
   const { createTasks, deleteTasks, updateDone } = useAxios();
 
-  const handleSubmit: ComponentProps<"form">["onSubmit"] = (e) => {
+  const handleSubmit: ComponentProps<"form">["onSubmit"] = async (e) => {
     e.preventDefault();
-    createTasks(title);
-    mutate("/api/tasks");
-    setTilte("");
+    if (err) {
+      setErr("");
+    }
+    try {
+      const data = await createTasks(title);
+      if (!data) {
+        throw new Error("error");
+      }
+      mutate("/api/tasks");
+      setTilte("");
+    } catch (e: any) {
+      const err: string = e.response.data.message;
+      setErr(err);
+    }
   };
+
+  console.log(err);
 
   if (error) return <div>エラーが発生しました</div>;
   if (!data) return <div>読み込み中</div>;
 
-
   return (
-    <div className="mx-20">
+    <div className="mx-32 my-4">
       <h1>Tasks</h1>
       <form onSubmit={handleSubmit}>
         <input
-          className="border border-black"
+          className="border border-black mt-4 px-2 mr-4"
           type="text"
           value={title}
           onChange={(e) => setTilte(e.target.value)}
         />
+
         <button
-          className="bg-orange-400 text-white rounded-lg px-4"
+          className="bg-orange-400 text-white rounded-lg px-4 py-1"
           type="submit"
         >
           追加
         </button>
+        {err && <p className="text-red-500 text-sm">※{err}</p>}
       </form>
       <ul>
         {data.map((d) => (
@@ -66,7 +81,7 @@ const Tasks: NextPage = () => {
               {d.title}
             </li>
             <button
-              className={`bg-orange-400 text-white rounded-lg px-4`}
+              className={`bg-orange-400 text-white rounded-lg px-4 py-1`}
               onClick={() => {
                 deleteTasks(d.id);
                 mutate("/api/tasks");
