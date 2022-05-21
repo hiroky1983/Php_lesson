@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useState } from "react";
+import { ComponentProps, useState } from "react";
 import useSWR, { mutate } from "swr";
 import { useAxios } from "../function/useAxios";
 import axios from "../lib/axios";
@@ -19,7 +19,7 @@ const Tasks: NextPage = () => {
   const [title, setTilte] = useState("");
   const { createTasks, deleteTasks } = useAxios();
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit: ComponentProps<"form">["onSubmit"] = (e) => {
     e.preventDefault();
     createTasks(title);
     mutate("/api/tasks");
