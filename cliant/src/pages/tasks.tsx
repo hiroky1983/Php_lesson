@@ -4,7 +4,7 @@ import useSWR, { mutate } from "swr";
 import { useAxios } from "../function/useAxios";
 import axios from "../lib/axios";
 
-type Data = {
+export type Data = {
   id: number;
   title: string;
   is_done: boolean;
