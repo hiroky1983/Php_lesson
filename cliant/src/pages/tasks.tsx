@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { NextPage } from "next";
 import { ComponentProps, useState } from "react";
 import useSWR, { mutate } from "swr";
@@ -11,19 +12,24 @@ export type Data = {
   created_at: Date;
   updated_at: Date;
 };
+type IErrorResponse = {
+  message: string;
+};
 
 const Tasks: NextPage = () => {
   const { data, error } = useSWR<Data[]>("/api/tasks", () =>
     axios.get("/api/tasks").then((res) => res.data)
   );
   const [title, setTilte] = useState("");
-  const [err, setErr] = useState("");
+  const [err, setErr] = useState(
+    undefined as AxiosError<IErrorResponse> | undefined
+  );
   const { createTasks, deleteTasks, updateDone } = useAxios();
 
   const handleSubmit: ComponentProps<"form">["onSubmit"] = async (e) => {
     e.preventDefault();
     if (err) {
-      setErr("");
+      setErr(undefined);
     }
     try {
       const data = await createTasks(title);
@@ -32,9 +38,8 @@ const Tasks: NextPage = () => {
       }
       mutate("/api/tasks");
       setTilte("");
-    } catch (e: any) {
-      const err: string = e.response.data.message;
-      setErr(err);
+    } catch (e) {
+      setErr(e as AxiosError<IErrorResponse>);
     }
   };
 
@@ -60,7 +65,9 @@ const Tasks: NextPage = () => {
         >
           追加
         </button>
-        {err && <p className="text-red-500 text-sm">※{err}</p>}
+        {err && (
+          <p className="text-red-500 text-sm">※{err.response?.data.message}</p>
+        )}
       </form>
       <ul>
         {data.map((d) => (
