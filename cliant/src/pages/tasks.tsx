@@ -1,5 +1,7 @@
 import { NextPage } from "next";
-import useSWR from "swr";
+import { useState } from "react";
+import useSWR, { mutate } from "swr";
+import { useAxios } from "../function/useAxios";
 import axios from "../lib/axios";
 
 type Data = {
@@ -14,6 +16,15 @@ const Tasks: NextPage = () => {
   const { data, error } = useSWR<Data[]>("/api/tasks", () =>
     axios.get("/api/tasks").then((res) => res.data)
   );
+  const [title, setTilte] = useState("");
+  const { createTasks, deleteTasks } = useAxios();
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    createTasks(title);
+    mutate("/api/tasks");
+    setTilte("");
+  };
 
   if (error) return <div>エラーが発生しました</div>;
   if (!data) return <div>読み込み中</div>;
@@ -21,11 +32,36 @@ const Tasks: NextPage = () => {
   console.log(data);
 
   return (
-    <div>
+    <div className="mx-20">
       <h1>Tasks</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          className="border border-black"
+          type="text"
+          value={title}
+          onChange={(e) => setTilte(e.target.value)}
+        />
+        <button
+          className="bg-orange-400 text-white rounded-lg px-4"
+          type="submit"
+        >
+          追加
+        </button>
+      </form>
       <ul>
         {data.map((d) => (
-          <li key={d.id}>{d.title}</li>
+          <div key={d.id} className="flex justify-between p-1">
+            <li>{d.title}</li>
+            <button
+              className="bg-orange-400 text-white rounded-lg px-4"
+              onClick={() => {
+                deleteTasks(d.id);
+                mutate("/api/tasks");
+              }}
+            >
+              削除
+            </button>
+          </div>
         ))}
       </ul>
     </div>
