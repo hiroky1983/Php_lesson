@@ -10,9 +10,21 @@ export const useAxios = () => {
     const { data } = await axios.delete<Data>(`api/tasks/${id}`);
     return data;
   };
+  const updateTasks = async (id: number, title: string) => {
+    const { data } = await axios.put<Data>(`api/tasks/${id}`, { title });
+    return data;
+  };
+  const updateDone = async (id: number, is_done: boolean) => {
+    const { data } = await axios.patch<Data>(`api/tasks/update-done/${id}`, {
+      is_done,
+    });
+    return data;
+  };
 
   return {
     createTasks,
     deleteTasks,
+    updateTasks,
+    updateDone,
   };
 };

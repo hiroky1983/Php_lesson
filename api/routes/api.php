@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::apiResource('tasks','TaskController');
-
+Route::patch('tasks/update-done/{task}', 'TaskController@updateDone');
 
 Route::get('/hello', function () {
     return [

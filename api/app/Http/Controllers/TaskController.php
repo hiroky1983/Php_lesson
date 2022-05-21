@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Http\Requests\TaskRequest;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -65,6 +66,17 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         return $task->delete() ? response()->json($task) : response()->json([], 500);
+    }
 
+    /**
+     * @param  \App\Http\Requests\UpdateTaskRequest  $request
+     * @param  \App\Models\Task  $task
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateDone(Task $task ,Request $request)
+    {
+        $task->is_done = $request->is_done;
+
+        return $task->update() ? response()->json($task) : response()->json([], 500);
     }
 }

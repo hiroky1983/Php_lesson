@@ -17,7 +17,7 @@ const Tasks: NextPage = () => {
     axios.get("/api/tasks").then((res) => res.data)
   );
   const [title, setTilte] = useState("");
-  const { createTasks, deleteTasks } = useAxios();
+  const { createTasks, deleteTasks, updateDone } = useAxios();
 
   const handleSubmit: ComponentProps<"form">["onSubmit"] = (e) => {
     e.preventDefault();
@@ -50,10 +50,24 @@ const Tasks: NextPage = () => {
       </form>
       <ul>
         {data.map((d) => (
-          <div key={d.id} className="flex justify-between p-1">
-            <li>{d.title}</li>
+          <div key={d.id} className="flex p-1 items-center">
+            <input
+              id={String(d.id)}
+              type="checkbox"
+              checked={d.is_done}
+              onChange={() => {
+                updateDone(d.id, !d.is_done);
+                mutate("/api/tasks");
+              }}
+              className="mr-2"
+            />
+            <li
+              className={`flex-grow ${d.is_done && "opacity-50 line-through"}`}
+            >
+              {d.title}
+            </li>
             <button
-              className="bg-orange-400 text-white rounded-lg px-4"
+              className={`bg-orange-400 text-white rounded-lg px-4`}
               onClick={() => {
                 deleteTasks(d.id);
                 mutate("/api/tasks");
