@@ -12,7 +12,8 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <h1>Next template</h1>
-        <button onClick={() => router.push("/hello")}>ボタン</button>
+        <button onClick={() => router.push("/hello")}>hello</button>
+        <button onClick={() => router.push("/tasks")}>tasks</button>
       </main>
     </div>
   );
