@@ -51,7 +51,7 @@ const Tasks: NextPage = () => {
       <h1>Tasks</h1>
       <form onSubmit={handleSubmit}>
         <input
-          className="border shadow-lg rounded-md my-4 p-2 mr-4 w-1/2"
+          className="border shadow-lg rounded-md my-4 p-2 pl-3 mr-6 w-1/2"
           type="text"
           value={title}
           onChange={(e) => setTilte(e.target.value)}
@@ -82,10 +82,12 @@ const Tasks: NextPage = () => {
                 updateDone(d.id, !d.is_done);
                 mutate("/api/tasks");
               }}
-              className="mr-3 bg-orange-500"
+              className="mr-4 bg-orange-500"
             />
             <li
-              className={`flex-grow ${d.is_done && "opacity-50 line-through"}`}
+              className={`flex-grow text-lg font-medium ${
+                d.is_done && "opacity-50 line-through"
+              }`}
             >
               {d.title}
             </li>
