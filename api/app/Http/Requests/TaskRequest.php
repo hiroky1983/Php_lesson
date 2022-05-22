@@ -24,13 +24,13 @@ class TaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:100|unique:posts'
+            'title' => 'required|max:100|unique:tasks'
         ];
     }
     
     public function messages() {
         return [
-            'title.unique:posts' => 'タイトルは既に使用されています',
+            'title.unique:tasks' => 'タイトルは既に使用されています',
         ];
     }    
 
