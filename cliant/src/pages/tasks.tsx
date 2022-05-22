@@ -51,10 +51,11 @@ const Tasks: NextPage = () => {
       <h1>Tasks</h1>
       <form onSubmit={handleSubmit}>
         <input
-          className="border border-black mt-4 px-2 mr-4"
+          className="border shadow-lg rounded-md my-4 p-2 mr-4 w-1/2"
           type="text"
           value={title}
           onChange={(e) => setTilte(e.target.value)}
+          placeholder="タスクを入力してください"
         />
 
         <button
@@ -69,7 +70,10 @@ const Tasks: NextPage = () => {
       </form>
       <ul>
         {data.map((d) => (
-          <div key={d.id} className="flex p-1 items-center">
+          <div
+            key={d.id}
+            className="flex items-center my-2 p-4 shadow-lg rounded-md"
+          >
             <input
               id={String(d.id)}
               type="checkbox"
@@ -78,7 +82,7 @@ const Tasks: NextPage = () => {
                 updateDone(d.id, !d.is_done);
                 mutate("/api/tasks");
               }}
-              className="mr-2"
+              className="mr-3 bg-orange-500"
             />
             <li
               className={`flex-grow ${d.is_done && "opacity-50 line-through"}`}
