@@ -59,7 +59,7 @@ const Tasks: NextPage = () => {
         />
 
         <button
-          className="bg-orange-400 text-white rounded-lg px-4 py-1"
+          className="bg-orange-400 text-white rounded-lg px-4 py-1 hover:opacity-70"
           type="submit"
         >
           追加
@@ -87,7 +87,7 @@ const Tasks: NextPage = () => {
               {d.title}
             </li>
             <button
-              className={`bg-orange-400 text-white rounded-lg px-4 py-1`}
+              className={`bg-orange-400 text-white rounded-lg px-4 py-1 hover:opacity-70`}
               onClick={() => {
                 deleteTasks(d.id);
                 mutate("/api/tasks");
