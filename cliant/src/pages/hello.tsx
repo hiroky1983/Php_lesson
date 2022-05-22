@@ -11,7 +11,6 @@ const Hello: NextPage = () => {
   const { data, error } = useSWR<Data[]>("/api/hello", () =>
     axios.get("/api/hello").then((res: AxiosResponse) => res.data)
   );
-  console.log(data);
 
   if (error) return <div>エラーが発生しました</div>;
   if (!data) return <div>読み込み中</div>;

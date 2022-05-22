@@ -45,7 +45,6 @@ const Tasks: NextPage = () => {
 
   if (error) return <div>エラーが発生しました</div>;
   if (!data) return <div>読み込み中</div>;
-  console.log(err);
 
   return (
     <div className="mx-32 my-4">
