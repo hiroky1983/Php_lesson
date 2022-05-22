@@ -21,9 +21,7 @@ const Tasks: NextPage = () => {
     axios.get("/api/tasks").then((res) => res.data)
   );
   const [title, setTilte] = useState("");
-  const [err, setErr] = useState(
-    undefined as AxiosError<IErrorResponse> | undefined
-  );
+  const [err, setErr] = useState<AxiosError<IErrorResponse> | undefined>(undefined);
   const { createTasks, deleteTasks, updateDone } = useAxios();
 
   const handleSubmit: ComponentProps<"form">["onSubmit"] = async (e) => {
@@ -42,8 +40,6 @@ const Tasks: NextPage = () => {
       setErr(e as AxiosError<IErrorResponse>);
     }
   };
-
-  console.log(err);
 
   if (error) return <div>エラーが発生しました</div>;
   if (!data) return <div>読み込み中</div>;
