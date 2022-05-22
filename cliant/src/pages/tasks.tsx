@@ -21,7 +21,9 @@ const Tasks: NextPage = () => {
     axios.get("/api/tasks").then((res) => res.data)
   );
   const [title, setTilte] = useState("");
-  const [err, setErr] = useState<AxiosError<IErrorResponse> | undefined>(undefined);
+  const [err, setErr] = useState<AxiosError<IErrorResponse> | undefined>(
+    undefined
+  );
   const { createTasks, deleteTasks, updateDone } = useAxios();
 
   const handleSubmit: ComponentProps<"form">["onSubmit"] = async (e) => {

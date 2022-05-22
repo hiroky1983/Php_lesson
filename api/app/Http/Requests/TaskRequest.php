@@ -28,6 +28,12 @@ class TaskRequest extends FormRequest
         ];
     }
 
+    public function messages() {
+        return [
+            'title.unique:posts' => 'タイトルは既に使用されています',
+        ];
+    }
+
     public function attributes()
     {
         return [
