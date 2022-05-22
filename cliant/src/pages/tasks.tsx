@@ -32,8 +32,8 @@ const Tasks: NextPage = () => {
       setErr(undefined);
     }
     try {
-      const data = await createTasks(title);
-      if (!data) {
+      const res = await createTasks(title);
+      if (!res) {
         throw new Error("error");
       }
       mutate("/api/tasks");
@@ -45,6 +45,7 @@ const Tasks: NextPage = () => {
 
   if (error) return <div>エラーが発生しました</div>;
   if (!data) return <div>読み込み中</div>;
+  console.log(err);
 
   return (
     <div className="mx-32 my-4">

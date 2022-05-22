@@ -27,12 +27,12 @@ class TaskRequest extends FormRequest
             'title' => 'required|max:100|unique:posts'
         ];
     }
-
+    
     public function messages() {
         return [
             'title.unique:posts' => 'タイトルは既に使用されています',
         ];
-    }
+    }    
 
     public function attributes()
     {
