@@ -1,5 +1,6 @@
 import { AxiosError } from "axios";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { ComponentProps, useState } from "react";
 import useSWR, { mutate } from "swr";
 import { useAxios } from "../function/useAxios";
@@ -11,6 +12,11 @@ export type Data = {
   is_done: boolean;
   created_at: Date;
   updated_at: Date;
+};
+export type User = {
+  id: number;
+  name: string;
+  email: string;
 };
 type IErrorResponse = {
   message: string;
@@ -25,7 +31,9 @@ const Tasks: NextPage = () => {
   const [err, setErr] = useState<AxiosError<IErrorResponse> | undefined>(
     undefined
   );
-  const { createTasks, deleteTasks, updateDone, updateTasks } = useAxios();
+  const router = useRouter();
+  const { createTasks, deleteTasks, updateDone, updateTasks, logout } =
+    useAxios();
 
   const handleSubmit: ComponentProps<"form">["onSubmit"] = async (e) => {
     e.preventDefault();
@@ -44,12 +52,20 @@ const Tasks: NextPage = () => {
     }
   };
 
+  const logoutHandler = () => {
+    logout();
+    router.replace("/");
+  };
+
   if (error) return <div>エラーが発生しました</div>;
   if (!data) return <div>読み込み中</div>;
 
   return (
     <div className="mx-32 my-4">
-      <h1>Tasks</h1>
+      <div className="flex justify-between">
+        <h1>Tasks</h1>
+        <button onClick={logoutHandler}>Logout</button>
+      </div>
       <form onSubmit={handleSubmit}>
         <input
           className="border shadow-lg rounded-md my-4 p-2 pl-3 mr-6 w-1/2"
