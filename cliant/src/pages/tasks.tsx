@@ -31,6 +31,10 @@ const Tasks: NextPage = () => {
   const [err, setErr] = useState<AxiosError<IErrorResponse> | undefined>(
     undefined
   );
+  const [editErr, setEditErr] = useState<
+    AxiosError<IErrorResponse> | undefined
+  >(undefined);
+
   const router = useRouter();
   const { createTasks, deleteTasks, updateDone, updateTasks, logout } =
     useAxios();
@@ -51,6 +55,31 @@ const Tasks: NextPage = () => {
       setErr(e as AxiosError<IErrorResponse>);
     }
   };
+
+  const onBlur = async (id: number, title: string) => {
+    if (editTitle === title) {
+      setEditTitle("");
+      return;
+    }
+    try {
+      const res = await updateTasks(id, editTitle);
+      if (!res) {
+        throw new Error("error");
+      }
+      mutate("/api/tasks");
+      setEditTitle("");
+    } catch (e) {
+      let error = e as AxiosError<IErrorResponse>;
+      setEditErr(error);
+      alert(error.response?.data.message);
+      setEditTitle("");
+      setEditErr(undefined);
+    }
+  };
+
+  console.log(title);
+  console.log(editTitle);
+  console.log(editErr);
 
   const logoutHandler = () => {
     logout();
@@ -110,11 +139,11 @@ const Tasks: NextPage = () => {
                 className={`focus:outline-none ${
                   d.is_done && "opacity-50 line-through"
                 }`}
+                onClick={() => setEditTitle(d.title)}
                 onChange={(e) => {
                   setEditTitle(e.target.value);
-                  updateTasks(d.id, e.target.value);
-                  mutate("/api/tasks");
                 }}
+                onBlur={() => onBlur(d.id, d.title)}
               />
             </li>
             <button
