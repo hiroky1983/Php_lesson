@@ -77,10 +77,6 @@ const Tasks: NextPage = () => {
     }
   };
 
-  console.log(title);
-  console.log(editTitle);
-  console.log(editErr);
-
   const logoutHandler = () => {
     logout();
     router.replace("/");
