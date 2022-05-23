@@ -21,10 +21,11 @@ const Tasks: NextPage = () => {
     axios.get("/api/tasks").then((res) => res.data)
   );
   const [title, setTilte] = useState("");
+  const [editTitle, setEditTitle] = useState("");
   const [err, setErr] = useState<AxiosError<IErrorResponse> | undefined>(
     undefined
   );
-  const { createTasks, deleteTasks, updateDone } = useAxios();
+  const { createTasks, deleteTasks, updateDone, updateTasks } = useAxios();
 
   const handleSubmit: ComponentProps<"form">["onSubmit"] = async (e) => {
     e.preventDefault();
@@ -84,12 +85,19 @@ const Tasks: NextPage = () => {
               }}
               className="mr-4 bg-orange-500"
             />
-            <li
-              className={`flex-grow text-lg font-medium ${
-                d.is_done && "opacity-50 line-through"
-              }`}
-            >
-              {d.title}
+            <li className="flex-grow text-lg font-medium ">
+              <input
+                type="text"
+                defaultValue={d.title}
+                className={`focus:outline-none ${
+                  d.is_done && "opacity-50 line-through"
+                }`}
+                onChange={(e) => {
+                  setEditTitle(e.target.value);
+                  updateTasks(d.id, e.target.value);
+                  mutate("/api/tasks");
+                }}
+              />
             </li>
             <button
               className={`bg-orange-400 text-white rounded-lg px-4 py-1 hover:opacity-70`}
