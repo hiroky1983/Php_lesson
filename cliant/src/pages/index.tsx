@@ -7,7 +7,7 @@ import { useAxios } from "../function/useAxios";
 const Home: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAxios();
+  const { login, getUser } = useAxios();
 
   const router = useRouter();
   const onClickLogin = async () => {

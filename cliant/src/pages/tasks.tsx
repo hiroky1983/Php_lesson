@@ -64,7 +64,9 @@ const Tasks: NextPage = () => {
     <div className="mx-32 my-4">
       <div className="flex justify-between">
         <h1>Tasks</h1>
-        <button onClick={logoutHandler}>Logout</button>
+        <button className="text-blue-500 underline" onClick={logoutHandler}>
+          Logout
+        </button>
       </div>
       <form onSubmit={handleSubmit}>
         <input
@@ -89,7 +91,7 @@ const Tasks: NextPage = () => {
         {data.map((d) => (
           <div
             key={d.id}
-            className="flex items-center my-2 p-4 shadow-lg rounded-md"
+            className="flex items-center my-2 p-4 shadow-lg rounded-md w-2/3"
           >
             <input
               id={String(d.id)}
