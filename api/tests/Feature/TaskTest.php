@@ -5,10 +5,20 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Task;
+use App\Models\User;
 
 class TaskTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $user = User::factory()->create();
+        dd($user);
+        $this->actingAs($user);
+    }
 
     /**
      * @test
@@ -76,9 +86,9 @@ class TaskTest extends TestCase
     public function textMaxLenghtTest()
     {
         $data = [
-            'title' => str_repeat('a', 256)
+            'title' => str_repeat('a', 101)
         ];
         $response = $this->postJson('api/tasks', $data);
-        $response->assertStatus(422)->assertJsonValidationErrors(['title' => 'タイトルは、255文字以下にしてください。']);
+        $response->assertStatus(422)->assertJsonValidationErrors(['title' => 'タイトルは、100文字以下にしてください。']);
     }
 }
