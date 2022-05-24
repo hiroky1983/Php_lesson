@@ -31,7 +31,7 @@ const Tasks: NextPage = () => {
   const [err, setErr] = useState<AxiosError<IErrorResponse> | undefined>(
     undefined
   );
-  const [editErr, setEditErr] = useState<
+  const [_editErr, setEditErr] = useState<
     AxiosError<IErrorResponse> | undefined
   >(undefined);
 
