@@ -10,6 +10,16 @@ class TaskPolicy
 {
     use HandlesAuthorization;
 
+    public function checkUser (User $user, Task $task)
+    {
+         if($user->id === $task->user_id) {
+            return true;
+         };
+    }
+    
+
+    
+
     /**
      * Determine whether the user can view any models.
      *
