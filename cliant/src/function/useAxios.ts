@@ -24,7 +24,7 @@ export const useAxios = () => {
     const { data } = await axios.get<User>("api/user");
     return data;
   };
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: number) => {
     const { data } = await axios.post<Data>("api/login", { email, password });
     return data;
   };

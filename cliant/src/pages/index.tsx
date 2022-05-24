@@ -1,21 +1,21 @@
 import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAxios } from "../function/useAxios";
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState<number>();
   const { login, getUser } = useAxios();
 
   const router = useRouter();
   const onClickLogin = async () => {
-    await login(email, password);
+    await login(email, password!);
     router.push("/tasks");
   };
   const sampleLogin = async () => {
-    await login("admin@exsample.com", "123456789");
+    await login("admin@exsample.com", 123456789);
     router.push("/tasks");
   };
 
@@ -39,7 +39,7 @@ const Home: NextPage = () => {
           className="border shadow-lg rounded-md my-4 p-2 pl-3 mr-6 w-1/2"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(Number(e.target.value))}
         />
         <div>
           <button
