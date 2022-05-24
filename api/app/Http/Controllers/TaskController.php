@@ -12,7 +12,7 @@ class TaskController extends Controller
 
     public function __construct() 
     {
-        $this->middleware('can:checkUser, task')->only(['updateDone','update' ,'destroy']);
+        $this->middleware('can:checkUser,task')->only(['updateDone','update' ,'destroy']);
     }
 
     /**
