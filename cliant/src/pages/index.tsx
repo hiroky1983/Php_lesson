@@ -1,13 +1,13 @@
 import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAxios } from "../function/useAxios";
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState<number>();
-  const { login, getUser } = useAxios();
+  const { login } = useAxios();
 
   const router = useRouter();
   const onClickLogin = async () => {
